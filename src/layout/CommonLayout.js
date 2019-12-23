@@ -1,6 +1,11 @@
 import React, { Fragment } from "react";
+import { Link } from "react-router-dom";
 
 class CommonLayout extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
   render() {
     return (
       <section>
@@ -14,10 +19,16 @@ class CommonLayout extends React.Component {
           <div className="left-side-inner">
             <ul className="nav nav-pills nav-stacked custom-nav">
               <li>
-                <a href="index.html">
+                <Link to={"/dashboard"} className="nav-link">
                   <i className="lnr lnr-power-switch"></i>
                   <span>Dashboard</span>
-                </a>
+                </Link>
+              </li>
+              <li>
+                <Link to={"/category"} className="nav-link">
+                  <i className="lnr lnr-power-switch"></i>
+                  <span>Category</span>
+                </Link>
               </li>
             </ul>
           </div>
@@ -47,26 +58,6 @@ class CommonLayout extends React.Component {
                           <div className="clearfix"></div>
                         </div>
                       </a>
-                      <ul className="dropdown-menu drp-mnu">
-                        <li>
-                          {" "}
-                          <a href="#">
-                            <i className="fa fa-cog"></i> Settings
-                          </a>{" "}
-                        </li>
-                        <li>
-                          {" "}
-                          <a href="#">
-                            <i className="fa fa-user"></i>Profile
-                          </a>{" "}
-                        </li>
-                        <li>
-                          {" "}
-                          <a href="sign-up.html">
-                            <i className="fa fa-sign-out"></i> Logout
-                          </a>{" "}
-                        </li>
-                      </ul>
                     </li>
                     <div className="clearfix"> </div>
                   </ul>
@@ -75,6 +66,7 @@ class CommonLayout extends React.Component {
               </div>
             </div>
           </div>
+          {this.props.children}
           <div id="page-wrapper"></div>
         </div>
       </section>

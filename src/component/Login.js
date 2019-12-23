@@ -59,6 +59,9 @@ class Login extends React.Component {
                     <div className="clearfix"> </div>
                   </div>
                   <input type="submit" value="Login to your account" />
+                  <Link to={"/dashboard"} className="nav-link">
+                    Click Here
+                  </Link>
                 </form>
               </div>
             </div>

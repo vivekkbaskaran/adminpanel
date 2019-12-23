@@ -6,7 +6,7 @@ class Dashboard extends React.Component {
     return (
       <section>
         <div id="page-wrapper" className="sign-in-wrapper">
-          dashboard
+          <h1>dashboard is working fine</h1>
         </div>
       </section>
     );
