@@ -1,2 +1,5 @@
 export const LOADER_START = "LOADER_START";
 export const LOADER_STOP = "LOADER_STOP";
+export const REQUEST_BEGIN = "REQUEST_BEGIN";
+export const REQUEST_SUCCESS = "REQUEST_SUCCESS";
+export const REQUEST_FAILURE = "REQUEST_FAILURE";

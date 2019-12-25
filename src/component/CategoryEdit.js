@@ -6,9 +6,9 @@ import ActionCreators from "../action/ActionCreators";
 
 const Edit = props => {
   const { handleSubmit } = props;
-  console.log(props.match.params.id);
+  console.log(props);
   return (
-    <form onSubmit={handleSubmit(props.categoryEdit.bind(this))}>
+    <form onSubmit={handleSubmit(props.categoryEdits.bind(this))}>
       <div>
         <label>First Name</label>
         <div>
@@ -63,7 +63,7 @@ class CategoryEdit extends React.Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-  categoryEdit: values => dispatch(ActionCreators.categoryEdit(values))
+  categoryEdits: values => dispatch(ActionCreators.categoryEdit(values))
 });
 
 CategoryEdit = connect(null, mapDispatchToProps)(CategoryEdit);
