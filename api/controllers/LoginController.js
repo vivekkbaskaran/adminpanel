@@ -4,11 +4,15 @@ var UserModel = require("../models/Login");
 
 router.post("/login", function(req, res, next) {
   UserModel.findOne({ username: req.body.username }, function(err, user) {
-    if (err) return next(err);
+    if (err)
+      return next(
+        res.json({ status: 200, message: "User not found", data: err })
+      );
     if (!user) {
       res.json({ status: 201, message: "User not found", data: [] });
+    } else {
+      res.json({ status: 200, message: "User logged In", data: user });
     }
-    res.json({ status: 200, message: "User logged In", data: user });
   });
 });
 

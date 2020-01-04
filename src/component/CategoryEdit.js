@@ -1,26 +1,23 @@
 import React from "react";
 import { Field, reduxForm } from "redux-form";
-import { connect } from "react-redux";
 import axios from "axios";
-import ActionCreators from "../action/ActionCreators";
+import history from "../history";
+import { renderField } from "../forms/TextBox";
 
 const Edit = props => {
-  const { handleSubmit } = props;
-  console.log(props);
   return (
-    <form onSubmit={handleSubmit(props.categoryEdits.bind(this))}>
+    <form onSubmit={props.handleSubmit.bind(this)}>
       <div>
-        <label>First Name</label>
         <div>
           <Field
             name="cat_name"
-            component="input"
             type="text"
-            placeholder="First Name"
+            component={renderField}
+            label="Category Name"
           />
           <Field
             name="id"
-            component="input"
+            component={renderField}
             type="hidden"
             placeholder="First Name"
           />
@@ -33,10 +30,28 @@ const Edit = props => {
   );
 };
 
+const onSubmit = (values, dispatch) => {
+  axios
+    .put(`http://localhost:5000/category/list/` + values.id, {
+      cat_name: values.cat_name
+    })
+    .then(res => {
+      const data = res.data;
+      if (data.status == 500) {
+        const error = data.errors.cat_name.message;
+        return error;
+      } else {
+        history.push("/category");
+      }
+    });
+};
+
 class CategoryEdit extends React.Component {
-  constructor(props) {
-    super(props);
-  }
+  state = {
+    items: [],
+    loading: false,
+    error: null
+  };
 
   componentDidMount() {
     axios
@@ -62,12 +77,7 @@ class CategoryEdit extends React.Component {
   }
 }
 
-const mapDispatchToProps = dispatch => ({
-  categoryEdits: values => dispatch(ActionCreators.categoryEdit(values))
-});
-
-CategoryEdit = connect(null, mapDispatchToProps)(CategoryEdit);
-
 export default reduxForm({
-  form: "CategoryEdit"
+  form: "CategoryEdit",
+  onSubmit
 })(CategoryEdit);

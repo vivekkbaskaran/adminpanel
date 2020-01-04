@@ -14,19 +14,24 @@ router.get("/list/:id", async (req, res) => {
   res.status(200).json(cat);
 });
 
-router.put("/list/:id", async (req, res) => {
-  console.log("req.body");
-  console.log(req.body);
+router.put("/list/:id", async (req, res, next) => {
   var objId = new ObjectId(req.params.id);
-  const cat = await category.updateOne(
+
+  category.findOneAndUpdate(
     { _id: objId },
-    { cat_name: req.body.cat_name }
+    { cat_name: req.body.cat_name },
+    { upsert: true, new: true, runValidators: true, setDefaultsOnInsert: true },
+    function(err, category) {
+      if (err) {
+        return res.json({
+          message: "Updation of group failed",
+          errors: err.errors,
+          status: 500
+        });
+      }
+      return res.json({ message: "Updated successfully", status: 200 });
+    }
   );
-  if (cat.ok == 1) {
-    res.status(200).json({ message: "Updated successfully", status: 200 });
-  } else {
-    res.status(201).json({ message: "Updated failed", status: 201 });
-  }
 });
 
 module.exports = router;

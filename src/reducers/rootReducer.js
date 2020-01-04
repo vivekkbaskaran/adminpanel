@@ -1,8 +1,8 @@
 import { combineReducers } from "redux";
 import { reducer as reduxFormReducer } from "redux-form";
-import CategoryReducer from "./CategoryReducer";
+import LoginReducer from "./LoginReducer";
 
 export default combineReducers({
   form: reduxFormReducer,
-  CategoryReducer
+  LoginReducer
 });

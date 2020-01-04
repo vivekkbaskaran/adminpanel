@@ -29,11 +29,9 @@ LoginSchema.methods.newAuthToken = async function() {
   const token = jwt.sign({ _id: user.id.toString() }, "vivek", {
     expiresIn: "7 days"
   });
-  console.log("2");
   user.tokens = user.tokens.concat({ token });
   await user.save();
-  console.log("ppp" + token);
   return token;
 };
 
-module.exports = mongoose.model("UserModel", LoginSchema);
+module.exports = mongoose.model("Logins", LoginSchema); // here Logins is collection name

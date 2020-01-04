@@ -1,11 +1,7 @@
-import React, { Fragment } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 
 class CommonLayout extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     return (
       <section>
@@ -28,6 +24,12 @@ class CommonLayout extends React.Component {
                 <Link to={"/category"} className="nav-link">
                   <i className="lnr lnr-power-switch"></i>
                   <span>Category</span>
+                </Link>
+              </li>
+              <li>
+                <Link to={"/products"} className="nav-link">
+                  <i className="lnr lnr-power-switch"></i>
+                  <span>Products</span>
                 </Link>
               </li>
             </ul>
