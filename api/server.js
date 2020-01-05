@@ -1,42 +1,30 @@
 const express = require("express");
-const cors = require("cors");
+const mongoose = require("mongoose");
+const bodyParser = require("body-parser");
+
+// Routes
+const users = require("./routes/api/users");
+const profile = require("./routes/api/profile");
+const posts = require("./routes/api/posts");
+const category = require("./routes/api/category");
+const subcategory = require("./routes/api/subcategory");
+
 const app = express();
-var bodyParser = require("body-parser");
-var validator = require("validator");
-var multer = require("multer");
-app.set("secretKey", "nodeRestApi"); // jwt secret token
-app.use(cors());
-app.options("*", cors());
-
-const port = 5000;
-var db = require("./db/mongoose");
-
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+const DB = require("./config/keys").mongoURI;
 
-const LoginController = require("./controllers/LoginController");
-const CategoryController = require("./controllers/CategoryController");
-const ProductController = require("./controllers/ProductController");
-app.use("/user", LoginController);
-app.use("/category", CategoryController);
-app.use("/product", ProductController);
+mongoose
+  .connect(DB, { useUnifiedTopology: true, useNewUrlParser: true })
+  .then(() => console.log("Mongodb connected successfully"))
+  .catch(err => console.log("Mongodb not connected" + err));
 
-// var Storage = multer.diskStorage({
-//     destination: function(req, file, callback) {
-//         callback(null, "./Images");
-//     },
-//     filename: function(req, file, callback) {
-//         callback(null, file.fieldname + "_" + Date.now() + "_" + file.originalname);
-//     }
-// });
+// Routes for controllers
+app.use("/api/users", users);
+app.use("/api/profile", profile);
+app.use("/api/posts", posts);
+app.use("/api/category", category);
+app.use("/api/subcategory", subcategory);
+const port = process.env.PORT || 5000;
 
-// var upload = multer({
-//     storage: Storage
-// }).array("imgUploader", 3); //Field name and max count
-// upload(req, res, function(err) {
-//          if (err) {
-//              return res.end("Something went wrong!");
-//          }
-//          return res.end("File uploaded sucessfully!.");
-//      });
-app.listen(port, () => console.log("Example app listening on port " + port));
+app.listen(port, () => console.log(`server running on port ${port}`));

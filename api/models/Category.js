@@ -1,16 +1,13 @@
-var mongoose = require("mongoose");
-const Schema = mongoose.Schema;
+const mongoose = require("mongoose");
 
-var categorySchema = new Schema({
-  cat_name: {
+var CategorySchema = new mongoose.Schema({
+  catgory_name: {
     type: String,
-    required: [true, "category name is required"]
+    required: [true, "Catgory name is required"]
   },
-  _id: { type: mongoose.Schema.Types.ObjectId }
-});
-categorySchema.pre("findOneAndUpdate", function(next) {
-  this.options.runValidators = true;
-  next();
+  modified_date: {
+    type: Date
+  }
 });
 
-module.exports = mongoose.model("category", categorySchema);
+module.exports = mongoose.model("Category", CategorySchema);
