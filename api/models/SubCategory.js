@@ -13,6 +13,10 @@ var SubCategorySchema = new Schema({
   },
   modified_date: {
     type: Date
+  },
+  is_active: {
+    type: Boolean,
+    default: 1
   }
 });
 

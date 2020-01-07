@@ -87,7 +87,7 @@ router.post("/login", (req, res) => {
   });
 });
 
-router.get("/current", checkAuth, checkAdmin("admin"), (req, res) => {
+router.get("/current", checkAuth, (req, res) => {
   res.json({
     id: req.user._id,
     name: req.user.username,

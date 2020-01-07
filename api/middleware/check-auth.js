@@ -10,6 +10,6 @@ module.exports = (req, res, next) => {
     req.userData = decode;
     next();
   } catch (error) {
-    return res.status(401).json({ status: 400, message: "Login again" });
+    return res.status(401).json({ status: 400, message: "Login Required" });
   }
 };
