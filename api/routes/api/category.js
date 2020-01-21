@@ -4,7 +4,8 @@ const Category = require("../../models/Category");
 const checkAuth = require("../../middleware/check-auth");
 const checkAdmin = require("../../middleware/check-role");
 
-router.get("/list", checkAuth, checkAdmin("admin"), (req, res) => {
+//checkAuth, checkAdmin("admin"),
+router.get("/list", (req, res) => {
   Category.find()
     .then(categroy => {
       res.json({ status: 200, data: categroy });
@@ -12,7 +13,7 @@ router.get("/list", checkAuth, checkAdmin("admin"), (req, res) => {
     .catch(err => console.log(err));
 });
 
-router.get("/list/:id", checkAuth, checkAdmin("admin"), (req, res) => {
+router.get("/list/:id", (req, res) => {
   Category.findOne({ _id: req.params.id })
     .then(categroy => {
       res.json({ status: 200, data: categroy });
@@ -20,7 +21,7 @@ router.get("/list/:id", checkAuth, checkAdmin("admin"), (req, res) => {
     .catch(err => console.log(err));
 });
 
-router.put("/list/:id", checkAuth, checkAdmin("admin"), (req, res) => {
+router.put("/list/:id", (req, res) => {
   Category.findById({ _id: req.params.id }, (err, categroy) => {
     if (!categroy) {
       res.json({ status: 400, msg: "Category not found" });

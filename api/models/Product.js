@@ -1,22 +1,32 @@
-var mongoose = require("mongoose");
+const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-var ProductSchema = new Schema({
+const ProductSchema = new Schema({
   product_name: {
     type: String,
-    required: true
+    required: [true, "Product name is required"]
   },
   product_image: {
-    // data: Buffer,
-    //contentType: String,
     type: String,
-    required: true
+    required: [true, "Product image is required"]
   },
-  Date: {
-    type: Date,
-    default: Date.now
+  category_id: {
+    type: Schema.Types.ObjectId,
+    ref: "Category",
+    required: [true, "category is required"]
   },
-  product_category_id: [{ type: Schema.Types.ObjectId, ref: "category" }]
+  subcategory_id: {
+    type: Schema.Types.ObjectId,
+    ref: "Subcategory",
+    required: [true, "Subcategory is required"]
+  },
+  modified_date: {
+    type: Date
+  },
+  is_active: {
+    type: Boolean,
+    default: 1
+  }
 });
 
 module.exports = mongoose.model("Products", ProductSchema);
