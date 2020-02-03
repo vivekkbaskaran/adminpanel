@@ -23,6 +23,8 @@ var storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 router.post("/add", upload.single("product_image"), (req, res, next) => {
+  console.log("req.file");
+  console.log(req.file);
   if (req.body.category_id) {
     Category.findById({ _id: req.body.category_id }, (err, category) => {
       if (!category)

@@ -1,29 +1,28 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
+import { get_category } from "../../actions/categoryAction";
+import { connect } from "react-redux";
 
-export default class CategoryList extends Component {
+class CategoryList extends Component {
   constructor(props) {
     super(props);
-
     this.state = {
       categories: []
     };
   }
+
   componentDidMount() {
-    axios
-      .get(`${process.env.REACT_APP_DB}api/category/list`)
-      .then(res => {
-        this.setState({ categories: res.data.data });
-      })
-      .catch(err => console.log(err));
+    this.props.get_category();
   }
 
   render() {
     const mainPanleStyle = {
       paddingTop: "60px"
     };
-    console.log(this.state.categories);
+    if (!this.props.category.length) {
+      return "Loading";
+    }
+
     return (
       <div className="main-panel" style={mainPanleStyle}>
         <div className="content-wrapper">
@@ -40,7 +39,7 @@ export default class CategoryList extends Component {
                       </tr>
                     </thead>
                     <tbody>
-                      {this.state.categories.map(res => {
+                      {this.props.category.map(res => {
                         return (
                           <tr key={res._id}>
                             <td>{res.catgory_name}</td>
@@ -61,3 +60,8 @@ export default class CategoryList extends Component {
     );
   }
 }
+
+const mapStateToProps = state => ({
+  category: state.categories.category
+});
+export default connect(mapStateToProps, { get_category })(CategoryList);

@@ -17,8 +17,12 @@ import Home from "../src/pages/home";
 import Login from "../src/pages/login";
 import CategoryList from "./pages/category/list";
 import SubcategoryList from "./pages/subcategory/list";
+import SubcategoryADD from "./pages/subcategory/add";
 import ProductList from "./pages/products/list";
+import ProductADD from "./pages/products/add";
+
 import CategoryEdit from "./pages/category/edit";
+
 import CommonLayout from "../src/components/layout/commonLayout";
 
 if (localStorage.jwt) {
@@ -60,8 +64,18 @@ class App extends React.Component {
                 />
                 <Route
                   exact
+                  path="/subcategoryadd"
+                  render={props => <SubcategoryADD {...props} />}
+                />
+                <Route
+                  exact
                   path="/products"
                   render={props => <ProductList />}
+                />
+                <Route
+                  exact
+                  path="/productsadd"
+                  render={props => <ProductADD {...props} />}
                 />
               </CommonLayout>
             </Switch>

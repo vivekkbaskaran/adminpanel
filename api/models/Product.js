@@ -10,6 +10,10 @@ const ProductSchema = new Schema({
     type: String,
     required: [true, "Product image is required"]
   },
+  product_price: {
+    type: Number,
+    required: [true, "Product price is required"]
+  },
   category_id: {
     type: Schema.Types.ObjectId,
     ref: "Category",

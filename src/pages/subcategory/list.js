@@ -1,8 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
+import { get_subcategory } from "../../actions/subcategoryAction";
+import { connect } from "react-redux";
 
-export default class SubcategoryList extends React.Component {
+class SubcategoryList extends React.Component {
   constructor(props) {
     super(props);
 
@@ -11,22 +12,22 @@ export default class SubcategoryList extends React.Component {
     };
   }
   componentDidMount() {
-    axios
-      .get(`${process.env.REACT_APP_DB}api/subcategory/list`)
-      .then(res => {
-        console.log(res.data.data);
-        this.setState({ subcategories: res.data.data });
-      })
-      .catch(err => console.log(err));
+    this.props.get_subcategory();
   }
-
+  navigate(add) {
+    console.log("test" + add);
+  }
   render() {
-    const mainPanleStyle = {
-      paddingTop: "60px"
-    };
+    if (!this.props.subcategory.length) {
+      return "Loading";
+    }
+
     return (
-      <div className="main-panel" style={mainPanleStyle}>
+      <div className="main-panel padding-60">
         <div className="content-wrapper">
+          <Link to="subcategoryadd">
+            <button>ADD</button>
+          </Link>
           <div className="row">
             <div className="col-lg-12 grid-margin stretch-card">
               <div className="card">
@@ -37,24 +38,14 @@ export default class SubcategoryList extends React.Component {
                       <tr>
                         <th>Subcategory Name</th>
                         <th>Category Name</th>
-                        <th>VIEW</th>
-                        <th>EDIT</th>
                       </tr>
                     </thead>
                     <tbody>
-                      {this.state.subcategories.map(res => {
+                      {this.props.subcategory.map(res => {
                         return (
                           <tr key={res._id}>
                             <td>{res.subcatgory_name}</td>
                             <td>{res.catgory_name}</td>
-                            <td>
-                              <Link to={`/subcategory/view/${res._id}`}>
-                                VIEW
-                              </Link>
-                            </td>
-                            <td>
-                              <Link to={`/category/edit/${res._id}`}>EDIT</Link>
-                            </td>
                           </tr>
                         );
                       })}
@@ -69,3 +60,9 @@ export default class SubcategoryList extends React.Component {
     );
   }
 }
+
+const mapStateToProps = state => ({
+  subcategory: state.subcategories.subcategory1
+});
+
+export default connect(mapStateToProps, { get_subcategory })(SubcategoryList);

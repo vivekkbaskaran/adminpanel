@@ -3,6 +3,8 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { loginUser } from "../actions/authAction";
 import { withRouter } from "react-router-dom";
+import TextFieldGroup from "../components/common/TextFieldGroup";
+
 class Login extends Component {
   constructor() {
     super();
@@ -22,8 +24,6 @@ class Login extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log("nextProps");
-    console.log(nextProps);
     if (nextProps.auth.isAuthenticated) {
       this.props.history.push("/dashboard");
     }
@@ -35,6 +35,7 @@ class Login extends Component {
   handleChange(e) {
     this.setState({ [e.target.name]: e.target.value });
   }
+
   onSubmit(e) {
     e.preventDefault();
     const user = {
@@ -43,6 +44,7 @@ class Login extends Component {
     };
     this.props.loginUser(user, this.props.history);
   }
+
   render() {
     const { user } = this.props.auth;
     return (
@@ -54,26 +56,20 @@ class Login extends Component {
                 <div className="col-lg-4 mx-auto">
                   <div className="auth-form-light text-left p-5">
                     <form className="pt-3" onSubmit={this.onSubmit}>
-                      <div className="form-group">
-                        <input
-                          type="text"
-                          className="form-control form-control-lg"
-                          name="email"
-                          placeholder="Username"
-                          value={this.state.email}
-                          onChange={this.handleChange1}
-                        />
-                      </div>
-                      <div className="form-group">
-                        <input
-                          type="password"
-                          className="form-control form-control-lg"
-                          name="password"
-                          placeholder="Password"
-                          value={this.state.password}
-                          onChange={this.handleChange1}
-                        />
-                      </div>
+                      <TextFieldGroup
+                        placeholder="user name"
+                        name="email"
+                        type="text"
+                        value={this.state.email}
+                        onChange={this.handleChange1}
+                      />
+                      <TextFieldGroup
+                        placeholder="password"
+                        name="password"
+                        type="password"
+                        value={this.state.Password}
+                        onChange={this.handleChange1}
+                      />
                       <div className="mt-3">
                         <input
                           type="submit"

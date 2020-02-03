@@ -1,41 +1,32 @@
 import {
-  REQUEST_BEGIN,
-  REQUEST_SUCCESS,
-  REQUEST_FAILURE
-} from "../action/Action";
+  CATEGORY_DISPATCH,
+  VIEW_CATEGORY_DISPATCH,
+  DELETE_CATEGORY_DISPATCH
+} from "../actions/types";
 
 const initialState = {
-  items: [],
-  loading: false,
-  error: null
+  category: {},
+  viewData: {},
+  updateData: {}
 };
 
-export default function CategoryReducer(state = initialState, action) {
-  console.log("action");
-  console.log(action);
+export default function(state = initialState, action) {
   switch (action.type) {
-    case REQUEST_BEGIN:
+    case CATEGORY_DISPATCH:
       return {
         ...state,
-        loading: true,
-        error: null
+        category: action.payload
       };
-
-    case REQUEST_SUCCESS:
+    case VIEW_CATEGORY_DISPATCH:
       return {
         ...state,
-        loading: false,
-        items: action.payload
+        viewData: action.payload
       };
-
-    case REQUEST_FAILURE:
+    case DELETE_CATEGORY_DISPATCH:
       return {
         ...state,
-        loading: false,
-        error: action.payload,
-        items: []
+        updateData: action.payload
       };
-
     default:
       return state;
   }
